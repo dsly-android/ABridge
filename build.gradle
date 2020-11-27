@@ -7,10 +7,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.2'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
-
+        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath 'com.novoda:bintray-release:0.9.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -20,27 +18,16 @@ allprojects {
     repositories {
         google()
         jcenter()
-
-        maven {
-            //一般 Add to JCenter会有审核延迟, 此时还没有添加到Jcenter中
-            //在未审核通过之前，可以这样使用自己的maven仓库：
-            url 'https://dl.bintray.com/iyifei/maven/'
-        }
-        maven { url rootProject.file("repo-abridge") }
     }
-
+    //加上这些
     tasks.withType(Javadoc) {
-        options.addStringOption('Xdoclint:none', '-quiet')
-        options.addStringOption('encoding', 'UTF-8')
-        options.addStringOption('charSet', 'UTF-8')
-
+        options{ encoding "UTF-8"
+            charSet 'UTF-8'
+            links "http://docs.oracle.com/javase/7/docs/api"
+        }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
-}
-
-ext {
-    abridge_version = "0.0.1"
 }

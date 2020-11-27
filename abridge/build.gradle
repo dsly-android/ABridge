@@ -1,42 +1,27 @@
 apply plugin: 'com.android.library'
-
-ext {
-    bintrayName = 'abridge'
-    artifact = bintrayName
-    libraryName = 'abridge'
-    libraryDescription = 'abridge for android ipc'
-    libraryVersion = abridge_version
-    localRepo = '../repo-abridge'
-}
+apply plugin: 'com.novoda.bintray-release'
 
 android {
-    compileSdkVersion Integer.parseInt(COMPILE_SDK_VERSION)
-    buildToolsVersion BUILDTOOLS_VERSION
+    compileSdkVersion 29
+    buildToolsVersion "29.0.0"
 
     defaultConfig {
-        minSdkVersion Integer.parseInt(MIN_SDK_VERSION)
-        targetSdkVersion Integer.parseInt(TARGET_SDK_VERSION)
-    }
-
-    buildTypes {
-        lintOptions { abortOnError false }
-    }
-
-    sourceSets {
-        main {
-            aidl.srcDirs = ['src/main/aidl', 'src/main/aidl/']
-            java.srcDirs = ['src/main/java', 'src/main/java/']
-        }
+        minSdkVersion 17
+        targetSdkVersion 29
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api "com.android.support:appcompat-v7:${SUPPORT_LIB_VERSION}"
+
+    api 'androidx.appcompat:appcompat:1.1.0'
 }
 
-
-//apply from: '../bintrayv1.gradle'
-//apply from: '../installv1.gradle'
-
-apply from: '../bintray.gradle'
+publish {
+    userOrg = 'a951028743'      //bintray注册的用户名
+    groupId = 'com.android.dsly'         //compile引用时的第1部分groupId
+    artifactId = 'abridge'     //compile引用时的第2部分项目名
+    publishVersion = '1.0.0'    //compile引用时的第3部分版本号
+    desc = '封装aidl'
+    website = ''
+}
